@@ -4,6 +4,8 @@ import "./globals.css";
 import { ConvexClient } from "convex/browser";
 import { ConvexClientProvider } from "@/components/ui/providers/convex-provider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "@/components/ui/providers/theme-provider";
+import { Toaster } from "@/components/ui/sonner"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,12 +29,20 @@ export default function RootLayout({
 }>) {
   return (
    <ClerkProvider dynamic>
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ConvexClientProvider>
-        {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+          {children}
+          <Toaster/>
+          </ThemeProvider>
         </ConvexClientProvider>
       </body>
     </html>
